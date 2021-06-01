@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -54,7 +54,7 @@ function TodoForm(props) {
               name="difficulty"
               onChange={handleInputChange}
             />
-            <Button variant="primary" size="sm">
+            <Button type="submit" variant="primary" size="sm">
               Add Item
             </Button>
           </Form>
