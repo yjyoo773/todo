@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import TodoForm from "./form.js";
 import TodoList from "./list.js";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 
 import "./todo.scss";
 
@@ -23,6 +25,14 @@ function ToDo() {
       setList(newList);
     }
   };
+
+  useEffect(() => {
+    {
+      document.title = `To Do List: ${
+        list.filter((item) => !item.complete).length
+      }`;
+    }
+  });
 
   useEffect(() => {
     let initialList = [
@@ -67,10 +77,14 @@ function ToDo() {
 
   return (
     <>
+      <Navbar bg="primary" variant="dark">
+        <Nav className="mr-auto">
+          <Nav.Link href="/">Home</Nav.Link>
+        </Nav>
+      </Navbar>
       <header>
         <h2>
-          There are {list.filter((item) => !item.complete).length} Items To
-          Complete
+          To Do List Manager ({list.filter((item) => !item.complete).length}) 
         </h2>
       </header>
 
