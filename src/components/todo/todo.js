@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import TodoForm from "./form.js";
 import TodoList from "./list.js";
+
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Container";
 
 import "./todo.scss";
 
@@ -79,24 +81,26 @@ function ToDo() {
     <>
       <Navbar bg="primary" variant="dark">
         <Nav className="mr-auto">
-          <Nav.Link href="/">Home</Nav.Link>
+          <Nav.Link href="#">Home</Nav.Link>
         </Nav>
       </Navbar>
+      <Container>
       <header>
-        <h2>
+        <h2 className="text-center bg-dark m-1 p-3 text-light">
           To Do List Manager ({list.filter((item) => !item.complete).length}) 
         </h2>
       </header>
 
-      <section className="todo">
-        <div>
+      <section className="todo ">
+        <div >
           <TodoForm handleSubmit={addItem} />
         </div>
 
-        <div>
+        <div className = "mx-auto w-50">
           <TodoList list={list} handleComplete={toggleComplete} />
         </div>
       </section>
+      </Container>
     </>
   );
 }
