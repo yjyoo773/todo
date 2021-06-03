@@ -6,7 +6,7 @@ import useForm from "../../hooks/form.js";
 function TodoForm(props) {
 
 
-  const [handleSubmit, handleInput, handleChange, values] = useForm(chores);
+  const [handleSubmit,  handleChange] = useForm(chores);
 
   function chores(stuffToDo) {
     props.handleSubmit(stuffToDo);

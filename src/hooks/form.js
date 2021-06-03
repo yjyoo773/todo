@@ -16,13 +16,9 @@ const useForm = (action) => {
     setValues((values) => ({ ...values, [e.target.name]: e.target.value }));
   };
 
-  const handleInput = {
-    onChange: (e) => {
-      setValues((values) => ({ ...values, [e.target.name]: e.target.value }));
-    },
-  };
 
-  return [handleSubmit, handleInput, handleChange, values];
+
+  return [handleSubmit, handleChange];
 };
 
 export default useForm;
