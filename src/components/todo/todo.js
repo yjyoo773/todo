@@ -92,7 +92,7 @@ function ToDo() {
             <button className="toggle-hide"
               onClick={(e) => settingContext.changeHide(!settingContext.hide)}
             >
-              Toggle to Show Completed
+              {!settingContext.hide?"Hide Complete":"Show Complete"}
             </button>
           <Dropdown onSelect={e=>settingContext.changeOrder(e)}>
             <Dropdown.Toggle variant="primary" id="dropdown-basic">
