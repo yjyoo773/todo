@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const useAjax = () => {
+const useAjax = (list) => {
   const todoAPI = "https://ellis-api-server.herokuapp.com/todo";
 
   const handleGet = async (action) => {
@@ -21,23 +21,32 @@ const useAjax = () => {
     }
   };
 
-  const handlePut = async (id, item, action) => {
+  const handlePut = async (id, action) => {
     try {
-      let updatedItem = await axios.put(`${todoAPI}/${id}`, item);
-      action(updatedItem.data);
+      let item = list.filter((i) => i._id === id)[0] || {};
+      if (item._id) {
+        item.complete = !item.complete;
+        let updatedItem = await axios.put(`${todoAPI}/${id}`, item);
+        let data = updatedItem.data
+        action(
+          list.map((listItem) =>
+            listItem._id === data._id ? data : listItem
+          )
+        );
+      }
     } catch (e) {
       console.error(e);
     }
   };
 
-  const handleDelete = async (id,action) => {
-      try{
-        await axios.delete(`${todoAPI}/${id}`)
-        action()
-      } catch(e){
-          console.error(e)
-      }
-
+  const handleDelete = async (id, action) => {
+    try {
+      let item = list.filter((i) => i._id === id)[0] || {};
+      await axios.delete(`${todoAPI}/${id}`);
+      action(list.filter((el) => el._id !== item._id));
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return [handleGet, handlePost, handlePut, handleDelete];
