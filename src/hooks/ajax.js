@@ -14,22 +14,17 @@ const useAjax = (list) => {
   };
 
   const handlePost = async (item, action) => {
-      
     try {
-
       item.due = new Date();
       item.complete = false;
       let newItem = await axios.post(todoAPI, item);
       action(newItem.data);
-      
     } catch (e) {
-        
       console.error(e);
     }
   };
 
   const handlePut = async (id, action) => {
-
     try {
       let item = list.filter((i) => i._id === id)[0] || {};
       if (item._id) {

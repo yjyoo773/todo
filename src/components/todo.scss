@@ -4,6 +4,31 @@ body, html {
     padding:0;
     width: 100%;
     font-family: $font-primary;
+
+    button{
+        background-color: $blue;
+        color:$white;
+        border-radius:$border-radius;
+        border: 0;
+        padding:$gutter-sm;
+        transition: $transition-sp;
+        &:hover{
+            background-color: $primary-color;
+        }
+    }
+    .page-link{
+        &:hover{
+            background-color: $primary-color;
+            color: $white;
+        }
+    }
+    .dropdown{
+        margin-top: 5px;
+
+    }
+    .toggle-hide{
+        margin-top: 5px;
+    }
 }
 .todo-details {
     display:flex;
