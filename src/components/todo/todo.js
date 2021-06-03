@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+
+import useAjax from "../../hooks/ajax.js";
 import TodoForm from "./form.js";
 import TodoList from "./list.js";
 
@@ -6,27 +8,41 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 
-import "./todo.scss";
+// import "./todo.scss";
+
 
 function ToDo() {
   const [list, setList] = useState([]);
 
-  const addItem = (item) => {
-    item._id = Math.random();
-    item.complete = false;
-    setList([...list, item]);
+  const [handleGet, handlePost, handlePut, handleDelete] = useAjax();
+
+  const _addItem = async (item) => {
+    handlePost(item, (newItem) => setList([...list, newItem]));
+    console.log(item);
   };
 
-  const toggleComplete = (id) => {
+  const _putItem = async (id) => {
     let item = list.filter((i) => i._id === id)[0] || {};
     if (item._id) {
       item.complete = !item.complete;
-      let newList = list.map((listItem) =>
-        listItem._id === item._id ? item : listItem
+
+      handlePut(id, item, (update) =>
+        setList(
+          list.map((listItem) => (listItem._id === item._id ? item : listItem))
+        )
       );
-      setList(newList);
     }
   };
+
+  const _deleteItem = async (id) => {
+    let item = list.filter((i) => i._id === id)[0] || {};
+    handleDelete(id,del =>setList(list.filter((el) => el._id !== item._id)))
+
+  };
+
+  useEffect(() => {
+    handleGet((data) => setList(data));
+  }, []);
 
   useEffect(() => {
     {
@@ -36,47 +52,6 @@ function ToDo() {
     }
   });
 
-  useEffect(() => {
-    let initialList = [
-      {
-        _id: 1,
-        complete: false,
-        text: "Clean the Kitchen",
-        difficulty: 3,
-        assignee: "Person A",
-      },
-      {
-        _id: 2,
-        complete: false,
-        text: "Do the Laundry",
-        difficulty: 2,
-        assignee: "Person A",
-      },
-      {
-        _id: 3,
-        complete: false,
-        text: "Walk the Dog",
-        difficulty: 4,
-        assignee: "Person B",
-      },
-      {
-        _id: 4,
-        complete: true,
-        text: "Do Homework",
-        difficulty: 3,
-        assignee: "Person C",
-      },
-      {
-        _id: 5,
-        complete: false,
-        text: "Take a Nap",
-        difficulty: 1,
-        assignee: "Person B",
-      },
-    ];
-    setList(initialList);
-  }, []);
-
   return (
     <>
       <Navbar bg="primary" variant="dark">
@@ -85,21 +60,25 @@ function ToDo() {
         </Nav>
       </Navbar>
       <Container>
-      <header>
-        <h2 className="text-center bg-dark m-1 p-3 text-light">
-          To Do List Manager ({list.filter((item) => !item.complete).length}) 
-        </h2>
-      </header>
+        <header>
+          <h2 className="text-center bg-dark m-1 p-3 text-light">
+            To Do List Manager ({list.filter((item) => !item.complete).length})
+          </h2>
+        </header>
 
-      <section className="todo ">
-        <div >
-          <TodoForm handleSubmit={addItem} />
-        </div>
+        <section className="todo ">
+          <div>
+            <TodoForm handleSubmit={_addItem} />
+          </div>
 
-        <div className = "mx-auto w-50">
-          <TodoList list={list} handleComplete={toggleComplete} />
-        </div>
-      </section>
+          <div className="list-container">
+            <TodoList
+              list={list}
+              handleComplete={_putItem}
+              handleDelete={_deleteItem}
+            />
+          </div>
+        </section>
       </Container>
     </>
   );

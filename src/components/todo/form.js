@@ -1,63 +1,59 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+
+import useForm from "../../hooks/form.js";
 
 function TodoForm(props) {
-  const [item, setItem] = useState({});
 
-  const handleInputChange = (e) => {
-    setItem({ ...item, [e.target.name]: e.target.value });
-  };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    e.target.reset();
-    props.handleSubmit(item);
-    const newItem = {};
-    setItem(newItem);
-  };
+  const [handleSubmit, handleInput, handleChange, values] = useForm(chores);
+
+  function chores(stuffToDo) {
+    props.handleSubmit(stuffToDo);
+    console.log('this is stufftodo',stuffToDo)
+  }
 
   return (
     <>
       <Card>
         <Card.Body>
           <Card.Title>Add To Do Item</Card.Title>
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Label>
+          <form onSubmit={handleSubmit}>
+            <label>
               <span>To Do Item</span>
-            </Form.Label>
-            <Form.Control
+            </label>
+            <input
               type="text"
               name="text"
               placeholder="Item Details"
-              onChange={handleInputChange}
+              onChange={handleChange}
             />
-            <Form.Label>
+            
+            <label>
               <span>Assigned To</span>
-            </Form.Label>
-            <Form.Control
+            </label>
+            <input
               type="text"
               name="assignee"
               placeholder="Assignee Name"
-              onChange={handleInputChange}
-            ></Form.Control>
+              onChange={handleChange}
+            />
 
-            <Form.Label>
+            <label>
               <span>Difficulty Rating</span>
-            </Form.Label>
-            <Form.Control
+            </label>
+            <input
               defaultValue="1"
               type="range"
               min="1"
               max="5"
               name="difficulty"
-              onChange={handleInputChange}
+              onChange={handleChange}
             />
-            <Button type="submit" variant="primary" size="sm">
+            <button >
               Add Item
-            </Button>
-          </Form>
+            </button>
+          </form>
         </Card.Body>
       </Card>
     </>

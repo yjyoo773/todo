@@ -1,0 +1,51 @@
+
+.todo {
+
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-start;
+    margin: 2em 0;
+    position: relative;
+    .list-container{
+        position: absolute;
+        right:4vw;
+        ul {
+            list-style-type:none;
+            margin:0;
+            padding:0;
+            li{
+            position: relative;
+            .toast{
+                width: 35vw;
+                font-size: 1.2vw;
+            }
+            .badge{
+                color:white;
+                background-color: red;
+                height: 2vw;
+                margin-right: $gutter-sm;
+                &.complete-true{
+                    background-color: green;
+                }
+            }
+            strong{
+                text-align: center;
+            }
+            .difficulty{
+                position: absolute;
+                right: 35px;
+                font-size: 75%;
+            }
+            button{
+                background-color: $white;
+                border-radius: $border-radius;
+                border: none;
+                position: absolute;
+                right: 10px;
+    
+            }
+        }
+    }
+}
+
+}
