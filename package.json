@@ -2,6 +2,10 @@
   "name": "demo-context-api",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "npm": "5.7.1",
+    "node": "9.5.0"
+  },
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
