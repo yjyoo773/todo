@@ -8,36 +8,21 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 
-// import "./todo.scss";
-
-
 function ToDo() {
   const [list, setList] = useState([]);
 
-  const [handleGet, handlePost, handlePut, handleDelete] = useAjax();
+  const [handleGet, handlePost, handlePut, handleDelete] = useAjax(list);
 
   const _addItem = async (item) => {
     handlePost(item, (newItem) => setList([...list, newItem]));
-    console.log(item);
   };
 
   const _putItem = async (id) => {
-    let item = list.filter((i) => i._id === id)[0] || {};
-    if (item._id) {
-      item.complete = !item.complete;
-
-      handlePut(id, item, (update) =>
-        setList(
-          list.map((listItem) => (listItem._id === item._id ? item : listItem))
-        )
-      );
-    }
+    handlePut(id, (update) => setList(update));
   };
 
   const _deleteItem = async (id) => {
-    let item = list.filter((i) => i._id === id)[0] || {};
-    handleDelete(id,del =>setList(list.filter((el) => el._id !== item._id)))
-
+    handleDelete(id, (del) => setList(del));
   };
 
   useEffect(() => {
