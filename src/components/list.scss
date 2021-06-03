@@ -5,10 +5,11 @@
     flex-direction:row;
     justify-content: flex-start;
     margin: 2em 0;
-    position: relative;
+    // position: relative;
     .list-container{
-        position: absolute;
-        right:4vw;
+        // position: absolute;
+        // right:20vw;
+        margin: auto;
         ul {
             list-style-type:none;
             margin:0;
@@ -38,9 +39,12 @@
             }
             button{
                 background-color: $white;
+                color: $black;
                 border-radius: $border-radius;
                 border: none;
                 position: absolute;
+                height:$gutter-sm;
+                width:$gutter-sm;
                 right: 10px;
     
             }

@@ -17,17 +17,7 @@
                 flex-direction:column;
             }
     
-            button{
-                background-color: $blue;
-                color:$white;
-                border-radius:$border-radius;
-                border: 0;
-                padding:$gutter-sm;
-                transition: $transition-sp;
-                &:hover{
-                    background-color: $primary-color;
-                }
-            }
+
             input {
                 width: 100%;
                 display: block;

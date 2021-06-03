@@ -4,16 +4,19 @@ const useAjax = (list) => {
   const todoAPI = "https://ellis-api-server.herokuapp.com/todo";
 
   const handleGet = async (action) => {
-    let getList = await axios.get(todoAPI);
-    let data = getList.data;
-    action(data);
+    try {
+      let getList = await axios.get(todoAPI);
+      let data = getList.data;
+      action(data);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handlePost = async (item, action) => {
-    item.due = new Date();
-    item.complete = false;
-
     try {
+      item.due = new Date();
+      item.complete = false;
       let newItem = await axios.post(todoAPI, item);
       action(newItem.data);
     } catch (e) {
@@ -27,11 +30,9 @@ const useAjax = (list) => {
       if (item._id) {
         item.complete = !item.complete;
         let updatedItem = await axios.put(`${todoAPI}/${id}`, item);
-        let data = updatedItem.data
+        let data = updatedItem.data;
         action(
-          list.map((listItem) =>
-            listItem._id === data._id ? data : listItem
-          )
+          list.map((listItem) => (listItem._id === data._id ? data : listItem))
         );
       }
     } catch (e) {
@@ -51,4 +52,5 @@ const useAjax = (list) => {
 
   return [handleGet, handlePost, handlePut, handleDelete];
 };
+
 export default useAjax;
