@@ -5,20 +5,20 @@
     flex-direction:row;
     justify-content: flex-start;
     margin: 2em 0;
-    // position: relative;
+    position: relative;
     .list-container{
-        // position: absolute;
-        // right:20vw;
-        margin: auto;
+        position: absolute;
+        margin: 0 27vw;
         ul {
             list-style-type:none;
             margin:0;
             padding:0;
             li{
+            // margin: 0 auto;
             position: relative;
             .toast{
                 width: 35vw;
-                font-size: 1.2vw;
+                font-size: calc(max(1.2vw, 15px));
             }
             .badge{
                 color:white;
@@ -42,6 +42,15 @@
                 right: 35px;
                 font-size: 75%;
             }
+            .page-item{
+                margin-top: 3px;
+            }
+            .page-link{
+                color: $primary-color;
+                &:hover{
+                    color: $white;
+                }
+            }
             button{
                 background-color: $white;
                 color: $black;
@@ -61,6 +70,7 @@
                 }
     
             }
+
         }
     }
 }

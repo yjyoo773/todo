@@ -1,0 +1,35 @@
+h2{
+    font-size: 1.5vw;
+    width: 100%
+}
+.navbar{
+    height: $gutter-lg;
+    opacity: 60%
+}
+.navbar-brand{
+    font-size: $gutter-md;
+    margin-left: $gutter-md;
+    font-family: cursive;
+}
+.navbar-nav{
+    margin-left: auto;
+    .dropdown{
+        display: inline-block;
+        margin-left: 5px;
+    }
+    .dropdown-toggle{
+        padding: .9vw .75rem
+    }
+    .toggle-hide{
+        background-color: $primary-color;
+        &:hover{
+            background-color: $secondary-color;
+        }
+    }
+    
+    #dropdown-basic{
+        &:hover{
+            background-color: $secondary-color;
+        }
+    }
+}

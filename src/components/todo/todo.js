@@ -2,21 +2,20 @@ import React, { useState, useEffect, useContext } from "react";
 import { SettingContext } from "../../context/settings.js";
 import useAjax from "../../hooks/ajax.js";
 
+import Header from "./header.js"
 import Pagination from "./pagination.js";
 import TodoForm from "./form.js";
 import TodoList from "./list.js";
 
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
-import Dropdown from "react-bootstrap/Dropdown";
+
+import bg from '../../bg_img.jpeg'
 
 function ToDo() {
   const settingContext = useContext(SettingContext);
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(settingContext.itemPerPage);
-
+  const [itemsPerPage] = useState(settingContext.itemPerPage);
 
   const [handleGet, handlePost, handlePut, handleDelete] = useAjax(list);
 
@@ -28,9 +27,10 @@ function ToDo() {
     a[settingContext.order] > b[settingContext.order] ? -1 : 1
   );
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filtered.slice(indexOfFirstPost, indexOfLastPost);
+  // Pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filtered.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -56,22 +56,28 @@ function ToDo() {
         list.filter((item) => !item.complete).length
       }`;
     }
-
   });
 
+  var divStyle = {
+    backgroundImage: `url(${bg})`,
+    height: "auto",
+    minHeight: "100vh",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    overflow: "auto",
+  };
+
+
   return (
-    <>
-      <Navbar bg="primary" variant="dark">
-        <Nav className="mr-auto">
-          <Nav.Link href="#">Home</Nav.Link>
-        </Nav>
-      </Navbar>
+    <div style={divStyle}>
+      <Header/>
+      <Container >
         <header>
-          <h2 className="text-center bg-dark m-1 p-3 text-light">
+          <h2 className="bg-dark m-1 p-3 text-light">
             To Do List Manager ({list.filter((item) => !item.complete).length})
           </h2>
         </header>
-      <Container>
 
         <section className="todo ">
           <div>
@@ -80,36 +86,20 @@ function ToDo() {
 
           <div className="list-container">
             <TodoList
-              list={currentPosts}
+              list={currentItems}
               handleComplete={_putItem}
               handleDelete={_deleteItem}
             />
             <Pagination
-              postsPerPage={postsPerPage}
-              totalPosts={filtered.length}
+              itemsPerPage={itemsPerPage}
+              totalItems={filtered.length}
               paginate={paginate}
             />
-            <button className="toggle-hide"
-              onClick={(e) => settingContext.changeHide(!settingContext.hide)}
-            >
-              {!settingContext.hide?"Hide Complete":"Show Complete"}
-            </button>
-          <Dropdown onSelect={e=>settingContext.changeOrder(e)}>
-            <Dropdown.Toggle variant="primary" id="dropdown-basic">
-              Sort Order
-            </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              <Dropdown.Item eventKey='assignee'>Name</Dropdown.Item>
-              <Dropdown.Item eventKey='text'>Chore</Dropdown.Item>
-              <Dropdown.Item eventKey='difficulty'>Difficulty</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
           </div>
-
         </section>
       </Container>
-    </>
+    </div>
   );
 }
 
