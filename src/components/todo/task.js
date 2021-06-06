@@ -20,7 +20,7 @@ function Task(props) {
         </Toast.Header>
         <Toast.Body>
           {props.item.text}
-          <span className="difficulty">Difficulty {props.item.difficulty}</span>
+          <span className="difficulty">Difficulty: {props.item.difficulty}</span>
         </Toast.Body>
       </Toast>
     </li>

@@ -1,17 +1,9 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-
 import useForm from "../../hooks/form.js";
 
 function TodoForm(props) {
-
-
-  const [handleSubmit,  handleChange] = useForm(chores);
-
-  function chores(stuffToDo) {
-    props.handleSubmit(stuffToDo);
-    console.log('this is stufftodo',stuffToDo)
-  }
+  const [handleSubmit, handleChange] = useForm(props.handleSubmit);
 
   return (
     <>
@@ -28,7 +20,7 @@ function TodoForm(props) {
               placeholder="Item Details"
               onChange={handleChange}
             />
-            
+
             <label>
               <span>Assigned To</span>
             </label>
@@ -50,9 +42,7 @@ function TodoForm(props) {
               name="difficulty"
               onChange={handleChange}
             />
-            <button >
-              Add Item
-            </button>
+            <button>Add Item</button>
           </form>
         </Card.Body>
       </Card>
